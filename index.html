@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy One Month ❤️</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink-bg: #fde6ef;
+      --pink-soft: #fff3f8;
+      --pink-accent: #f3a3c1;
+      --text: #5a2a3a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: var(--pink-bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===== INTRO ===== */
+    #intro {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, #fde6ef, #fff3f8);
+    }
+
+    .flower {
+      position: relative;
+      width: 130px;
+      height: 130px;
+    }
+
+    .petal {
+      position: absolute;
+      width: 60px;
+      height: 90px;
+      background: #f7a1c4;
+      border-radius: 60px 60px 0 0;
+      top: 35px;
+      left: 35px;
+      transform-origin: bottom center;
+      opacity: 0;
+      animation: bloom 2.5s ease forwards;
+    }
+
+    .petal:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
+    .petal:nth-child(2) { transform: rotate(60deg); animation-delay: 0.15s; }
+    .petal:nth-child(3) { transform: rotate(120deg); animation-delay: 0.3s; }
+    .petal:nth-child(4) { transform: rotate(180deg); animation-delay: 0.45s; }
+    .petal:nth-child(5) { transform: rotate(240deg); animation-delay: 0.6s; }
+    .petal:nth-child(6) { transform: rotate(300deg); animation-delay: 0.75s; }
+
+    .center {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background: #ffd6e6;
+      border-radius: 50%;
+      top: 51px;
+      left: 51px;
+      opacity: 0;
+      animation: fadeIn 1s 1.2s forwards;
+    }
+
+    @keyframes bloom {
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .intro-text {
+      margin-top: 40px;
+      font-size: 1.4rem;
+      opacity: 0;
+      animation: fadeIn 2s 2s forwards;
+      text-align: center;
+    }
+
+    /* ===== LETTER SECTION ===== */
+    #letter-section {
+      display: none;
+      min-height: 100vh;
+      padding: 20px;
+      background: var(--pink-soft);
+    }
+
+    .audio-container {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    audio {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .layout {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 15px;
+      align-items: start;
+    }
+
+    .photos img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .letter-image {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- INTRO -->
+  <section id="intro">
+    <div class="flower">
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="center"></div>
+    </div>
+    <div class="intro-text">
+      Hi my love,<br>
+      happy one month ❤️
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section id="letter-section">
+    <div class="audio-container">
+      <p>Press play and read along 🌸</p>
+      <audio controls>
+        <source src="audio/letter.mp4" type="audio/mp4">
+      </audio>
+    </div>
+
+    <div class="layout">
+      <div class="photos">
+        <img src="images/pic1.jpg" alt="">
+        <img src="images/pic2.jpg" alt="">
+      </div>
+
+      <img src="images/letter.png" alt="Love Letter" class="letter-image">
+
+      <div class="photos">
+        <img src="images/pic3.jpg" alt="">
+      </div>
+    </div>
+  </section>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('letter-section').style.display = 'block';
+      window.scrollTo(0, 0);
+    }, 4500);
+  </script>
+
+</body>
+</html>
