@@ -67,29 +67,61 @@
     }
 
     .rose {
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle at center, #f06292 0%, #c2185b 70%);
-      border-radius: 50%;
-      animation: bloomRose 3s ease forwards;
-      opacity: 0;
+      position: relative;
+      width: 120px;
+      height: 120px;
     }
 
-    @keyframes bloomRose {
-      0% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
+    .petal {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at 50% 50%, #f06292 0%, #c2185b 80%);
+      border-radius: 50% 50% 50% 50%;
+      top: 30px;
+      left: 30px;
+      transform-origin: bottom center;
+      opacity: 0;
+      animation: bloomPetal 3s ease forwards;
     }
+
+    /* Rotate petals evenly around center */
+    .petal:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
+    .petal:nth-child(2) { transform: rotate(45deg); animation-delay: 0.2s; }
+    .petal:nth-child(3) { transform: rotate(90deg); animation-delay: 0.4s; }
+    .petal:nth-child(4) { transform: rotate(135deg); animation-delay: 0.6s; }
+    .petal:nth-child(5) { transform: rotate(180deg); animation-delay: 0.8s; }
+    .petal:nth-child(6) { transform: rotate(225deg); animation-delay: 1s; }
+    .petal:nth-child(7) { transform: rotate(270deg); animation-delay: 1.2s; }
+    .petal:nth-child(8) { transform: rotate(315deg); animation-delay: 1.4s; }
+
+    .center {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background: radial-gradient(circle at center, #ffd6e6, #ff7bac);
+      border-radius: 50%;
+      top: 46px;
+      left: 46px;
+      opacity: 0;
+      animation: fadeIn 1s 2s forwards;
+    }
+
+    @keyframes bloomPetal {
+      0% { transform: scale(0) rotate(var(--rotation)); opacity: 0; }
+      50% { transform: scale(1.2) rotate(var(--rotation)); opacity: 1; }
+      100% { transform: scale(1) rotate(var(--rotation)); opacity: 1; }
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
 
     .intro-text {
       margin-top: 40px;
       font-size: 1.6rem;
       text-align: center;
       opacity: 0;
-      animation: fadeIn 3s 2s forwards;
+      animation: fadeIn 3s 2.5s forwards;
     }
-
-    @keyframes fadeIn { to { opacity: 1; } }
 
     /* ===== LETTER SECTION ===== */
     #letter-section {
@@ -162,7 +194,17 @@
 
   <!-- INTRO -->
   <section id="intro">
-    <div class="rose"></div>
+    <div class="rose">
+      <div class="petal" style="--rotation:0deg"></div>
+      <div class="petal" style="--rotation:45deg"></div>
+      <div class="petal" style="--rotation:90deg"></div>
+      <div class="petal" style="--rotation:135deg"></div>
+      <div class="petal" style="--rotation:180deg"></div>
+      <div class="petal" style="--rotation:225deg"></div>
+      <div class="petal" style="--rotation:270deg"></div>
+      <div class="petal" style="--rotation:315deg"></div>
+      <div class="center"></div>
+    </div>
     <div class="intro-text">
       Hii Baby!!<br>
       Happy One Month. I Love You So Much Ra ❤️
@@ -203,7 +245,7 @@
       document.getElementById('intro').style.display = 'none';
       document.getElementById('letter-section').style.display = 'block';
       window.scrollTo(0, 0);
-    }, 4500);
+    }, 5000);
   </script>
 
 </body>
