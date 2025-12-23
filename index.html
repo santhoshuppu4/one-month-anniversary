@@ -68,66 +68,238 @@
     }
 
     /* ===== INTRO (Rose Bloom) ===== */
-    #intro {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(to bottom, #fde6ef, #fff3f8);
-      position: relative;
-      overflow: hidden;
+    #intro{
+      height:100vh;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(1200px 700px at 50% 20%, #fff3f8 0%, #fde6ef 45%, #ffe9f3 100%);
+      position:relative;
+      overflow:hidden;
     }
-    .rose {
-      position: relative;
-      width: 120px;
-      height: 120px;
+
+    /* cluster container centered above text */
+    .rose-cluster{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%, -66%); /* pulls cluster above the text */
+      width: 520px;
+      height: 260px;
+      pointer-events:none;
+      z-index:1;
     }
-    .petal {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      background: radial-gradient(circle at 50% 50%, #f06292 0%, #c2185b 80%);
-      border-radius: 50% 50% 50% 50%;
-      top: 30px;
-      left: 30px;
-      transform-origin: bottom center;
-      opacity: 0;
-      animation: bloomPetal 3s ease forwards;
+
+    /* keep text above roses or below depending on your vibe */
+    .intro-content{
+      position:relative;
+      z-index:2;
     }
-    /* Rotate petals evenly around center */
-    .petal:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
-    .petal:nth-child(2) { transform: rotate(45deg); animation-delay: 0.2s; }
-    .petal:nth-child(3) { transform: rotate(90deg); animation-delay: 0.4s; }
-    .petal:nth-child(4) { transform: rotate(135deg); animation-delay: 0.6s; }
-    .petal:nth-child(5) { transform: rotate(180deg); animation-delay: 0.8s; }
-    .petal:nth-child(6) { transform: rotate(225deg); animation-delay: 1s; }
-    .petal:nth-child(7) { transform: rotate(270deg); animation-delay: 1.2s; }
-    .petal:nth-child(8) { transform: rotate(315deg); animation-delay: 1.4s; }
-    .center {
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      background: radial-gradient(circle at center, #ffd6e6, #ff7bac);
+
+    /* each rose absolute within cluster */
+    .rose-cluster .rose{
+      position:absolute;
+      inset:auto;
+      transform: translate(-50%,-50%) scale(1);
+      opacity:0;
+    }
+
+    /* very slight arch (almost straight line) — less clustered */
+    .rose.r3{ left:50%; top:44%; --size: 190px; --roseDelay: .10s; z-index:3; } /* center (slightly higher) */
+    .rose.r2{ left:35%; top:46%; --size: 165px; --roseDelay: .00s; z-index:2; } /* left */
+    .rose.r4{ left:65%; top:46%; --size: 165px; --roseDelay: .20s; z-index:2; } /* right */
+    .rose.r1{ left:20%; top:48%; --size: 145px; --roseDelay: .30s; z-index:1; } /* outer-left */
+    .rose.r5{ left:80%; top:48%; --size: 145px; --roseDelay: .40s; z-index:1; } /* outer-right */
+
+    .intro-text{
+      margin-top: 42px;  /* increased from 24px */
+      font-size:1.6rem;
+      font-weight:700;
+      text-align:center;
+      letter-spacing:.2px;
+      color:#7a1f4b;
+      opacity:0;
+      animation: textIn 1.2s ease 1.8s forwards;
+      text-shadow: 0 6px 18px rgba(194,24,91,.18);
+    }
+    @keyframes textIn{
+      from{opacity:0; transform:translateY(8px); filter:blur(2px);}
+      to{opacity:1; transform:translateY(0); filter:blur(0);}
+    }
+
+    /* ===== ROSE ===== */
+    .rose{
+      position:absolute;
+      width: var(--size, 150px);
+      height: var(--size, 150px);
+      left: var(--x, 50%);
+      top: var(--y, 50%);
+      transform: translate(-50%,-50%) scale(.92);
+      filter: drop-shadow(0 18px 35px rgba(194,24,91,.20));
+      opacity:0;
+      animation: rosePop .9s ease forwards;
+      animation-delay: var(--roseDelay, 0s);
+    }
+    @keyframes rosePop{
+      0%{opacity:0; transform:translate(-50%,-50%) scale(.7); filter:blur(1px) drop-shadow(0 0 0 rgba(0,0,0,0));}
+      60%{opacity:1; transform:translate(-50%,-50%) scale(1.02); filter:blur(0) drop-shadow(0 18px 35px rgba(194,24,91,.20));}
+      100%{opacity:1; transform:translate(-50%,-50%) scale(1); }
+    }
+
+    .rose .core{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+    }
+
+    /* subtle glow behind rose */
+    .rose::before{
+      content:"";
+      position:absolute;
+      inset: 12%;
+      border-radius:50%;
+      background: radial-gradient(circle at 50% 45%,
+        rgba(255, 178, 205,.28) 0%,
+        rgba(240, 98, 146,.12) 35%,
+        rgba(194, 24, 91,.0) 70%);
+      transform: scale(.9);
+      filter: blur(2px);
+    }
+
+    /* ===== PETAL SHAPE =====
+       Uses clip-path + gradients + highlight overlay for "real" petals
+    */
+    .petal{
+      position:absolute;
+      width: 52%;
+      height: 42%;
+      left: 24%;
+      top: 28%;
+      transform-origin: 50% 92%;
+      /* petal silhouette */
+      clip-path: path("M 50 2 C 66 6 86 20 90 40 C 95 63 76 84 50 98 C 24 84 5 63 10 40 C 14 20 34 6 50 2 Z");
+      border-radius: 60% 60% 65% 65%;
+      opacity:0;
+
+      /* base shading */
+      background:
+        radial-gradient(120% 90% at 30% 30%, rgba(255,214,230,.95) 0%, rgba(255,214,230,.35) 18%, rgba(255,214,230,0) 48%),
+        radial-gradient(120% 90% at 65% 35%, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(120% 100% at 50% 95%, rgba(122,18,74,.40) 0%, rgba(122,18,74,0) 62%),
+        linear-gradient(145deg, var(--p1,#ff5fa2) 0%, var(--p2,#c2185b) 70%, var(--p3,#8a1242) 100%);
+
+      box-shadow:
+        inset 0 10px 18px rgba(255,255,255,.22),
+        inset 0 -10px 22px rgba(122,18,74,.25);
+      filter: saturate(1.05);
+    }
+
+    /* glossy highlight streak */
+    .petal::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      clip-path: inherit;
+      background:
+        radial-gradient(70% 60% at 28% 22%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(90% 70% at 55% 38%, rgba(255,190,214,.45) 0%, rgba(255,190,214,0) 60%);
+      mix-blend-mode: screen;
+      opacity:.85;
+    }
+
+    /* ===== BLOOM ANIMATION ===== */
+    .petal{
+      animation: bloom 1.7s cubic-bezier(.16, .85, .22, 1) forwards;
+      animation-delay: calc(var(--roseDelay, 0s) + var(--d, 0s));
+    }
+
+    @keyframes bloom{
+      0%{
+        opacity:0;
+        transform:
+          rotate(var(--r))
+          translateY(20%)
+          scale(.18)
+          skewX(-6deg);
+        filter: blur(1px);
+      }
+      55%{
+        opacity:1;
+        transform:
+          rotate(var(--r))
+          translateY(var(--lift, -2%))
+          scale(1.12)
+          skewX(0deg);
+        filter: blur(0);
+      }
+      100%{
+        opacity:1;
+        transform:
+          rotate(var(--r))
+          translateY(var(--lift, -2%))
+          scale(1)
+          skewX(0deg);
+      }
+    }
+
+    /* ===== LAYERS ===== */
+    .layer{
+      position:absolute;
+      inset:0;
+    }
+
+    /* outer petals: bigger + slightly darker */
+    .layer.outer .petal{
+      width: 58%;
+      height: 46%;
+      left: 21%;
+      top: 26%;
+      --p1: #ff66ad;
+      --p2: #c2185b;
+      --p3: #7b0f3b;
+      filter: saturate(1.08);
+    }
+
+    /* inner petals: smaller + brighter */
+    .layer.inner .petal{
+      width: 48%;
+      height: 38%;
+      left: 26%;
+      top: 30%;
+      --p1: #ff7bb9;
+      --p2: #d81b60;
+      --p3: #8a1242;
+      filter: saturate(1.15);
+    }
+
+    /* tiny center bud */
+    .bud{
+      width: 16%;
+      height: 16%;
       border-radius: 50%;
-      top: 46px;
-      left: 46px;
-      opacity: 0;
-      animation: fadeIn 1s 2s forwards;
+      background:
+        radial-gradient(circle at 35% 35%, #ffd6e6 0%, rgba(255,214,230,.5) 25%, rgba(255,214,230,0) 55%),
+        radial-gradient(circle at 55% 60%, #ff7bac 0%, #c2185b 62%, #7b0f3b 100%);
+      box-shadow:
+        inset 0 6px 12px rgba(255,255,255,.18),
+        inset 0 -8px 14px rgba(122,18,74,.25);
+      opacity:0;
+      transform: scale(.4);
+      animation: budIn 1s ease forwards;
+      animation-delay: calc(var(--roseDelay, 0s) + 1.05s);
     }
-    @keyframes bloomPetal {
-      0% { transform: scale(0) rotate(var(--rotation)); opacity: 0; }
-      50% { transform: scale(1.2) rotate(var(--rotation)); opacity: 1; }
-      100% { transform: scale(1) rotate(var(--rotation)); opacity: 1; }
+    @keyframes budIn{
+      to{opacity:1; transform: scale(1);}
     }
-    @keyframes fadeIn { to { opacity: 1; } }
-    .intro-text {
-      margin-top: 40px;
-      font-size: 1.6rem;
-      font-weight: 600;
-      text-align: center;
-      opacity: 0;
-      animation: fadeIn 3s 2.5s forwards;
+
+    /* optional gentle "breathing" after bloom */
+    .rose{
+      animation: rosePop .9s ease forwards, breathe 5.5s ease-in-out infinite;
+      animation-delay: var(--roseDelay, 0s), calc(var(--roseDelay, 0s) + 2.0s);
+    }
+    @keyframes breathe{
+      0%,100%{ transform: translate(-50%,-50%) scale(1); }
+      50%{ transform: translate(-50%,-50%) scale(1.02); }
     }
 
     /* ===== LETTER SECTION ===== */
@@ -227,20 +399,19 @@
 
   <!-- INTRO -->
   <section id="intro">
-    <div class="rose">
-      <div class="petal" style="--rotation:0deg"></div>
-      <div class="petal" style="--rotation:45deg"></div>
-      <div class="petal" style="--rotation:90deg"></div>
-      <div class="petal" style="--rotation:135deg"></div>
-      <div class="petal" style="--rotation:180deg"></div>
-      <div class="petal" style="--rotation:225deg"></div>
-      <div class="petal" style="--rotation:270deg"></div>
-      <div class="petal" style="--rotation:315deg"></div>
-      <div class="center"></div>
+    <div class="rose-cluster" aria-hidden="true">
+      <div class="rose r1"></div>
+      <div class="rose r2"></div>
+      <div class="rose r3"></div>
+      <div class="rose r4"></div>
+      <div class="rose r5"></div>
     </div>
-    <div class="intro-text">
-      Hii Baby!!<br>
-      Happy One Month. I Love You So Much Ra ❤️
+
+    <div class="intro-content">
+      <div class="intro-text">
+        Hii Baby!!<br>
+        Happy One Month. I Love You So Much Ra ❤️
+      </div>
     </div>
   </section>
 
@@ -277,6 +448,35 @@
   </section>
 
   <script>
+    function roseTemplate() {
+      const outer = Array.from({ length: 10 }, (_, i) => {
+        const r = i * (360 / 10);
+        const d = 0.05 * i;
+        const lift = -2 - (i % 2) * 1;
+        return `<div class="petal" style="--r:${r}deg; --d:${d}s; --lift:${lift}%"></div>`;
+      }).join("");
+
+      const inner = Array.from({ length: 8 }, (_, i) => {
+        const r = i * (360 / 8) + 18;
+        const d = 0.08 * i + 0.25;
+        const lift = -1 - (i % 2) * 0.8;
+        return `<div class="petal" style="--r:${r}deg; --d:${d}s; --lift:${lift}%"></div>`;
+      }).join("");
+
+      return `
+        <div class="core">
+          <div class="layer outer">${outer}</div>
+          <div class="layer inner">${inner}</div>
+          <div class="bud"></div>
+        </div>
+      `;
+    }
+
+    // Fill each rose div with petals (no randomization)
+    document.querySelectorAll(".rose-cluster .rose").forEach((rose) => {
+      rose.innerHTML = roseTemplate();
+    });
+
     // Switch from intro to letter section
     setTimeout(() => {
       document.getElementById('intro').style.display = 'none';
@@ -288,7 +488,6 @@
       videos.forEach(video => {
         video.play().catch(err => {
           console.log('Autoplay prevented:', err);
-          // If autoplay is blocked, mute and try again
           video.muted = true;
           video.play();
         });
