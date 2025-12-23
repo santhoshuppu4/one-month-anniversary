@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy One Month ❤️</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -31,11 +31,12 @@
       position: fixed;
       width: 20px;
       height: 20px;
-      background: rgba(255, 182, 193, 0.4);
+      background: rgba(219, 68, 105, 0.6);
       transform: rotate(-45deg);
       border-radius: 3px 3px 0 0;
       z-index: 1;
       pointer-events: none;
+      animation: floatUp 8s linear infinite;
     }
     .heart::before,
     .heart::after {
@@ -43,11 +44,28 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      background: rgba(255, 182, 193, 0.4);
+      background: rgba(219, 68, 105, 0.6);
       border-radius: 50%;
     }
     .heart::before { top: -10px; left: 0; }
     .heart::after { top: 0; left: 10px; }
+
+    @keyframes floatUp {
+      0% { 
+        transform: translateY(100vh) rotate(-45deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% { 
+        transform: translateY(-100vh) rotate(-45deg);
+        opacity: 0;
+      }
+    }
 
     /* ===== INTRO (Rose Bloom) ===== */
     #intro {
@@ -59,105 +77,54 @@
       background: linear-gradient(to bottom, #fde6ef, #fff3f8);
       position: relative;
       overflow: hidden;
-      z-index: 10;
     }
-
     .rose {
       position: relative;
-      width: 160px;
-      height: 220px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      width: 120px;
+      height: 120px;
     }
-
-    .rose-flower {
-      position: relative;
-      width: 140px;
-      height: 140px;
-      margin-bottom: 10px;
-    }
-
     .petal {
       position: absolute;
-      width: 50px;
-      height: 70px;
-      background: radial-gradient(ellipse at 50% 60%, #ff6b9d 0%, #c2185b 100%);
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      top: 35px;
-      left: 45px;
-      transform-origin: 50% 100%;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at 50% 50%, #f06292 0%, #c2185b 80%);
+      border-radius: 50% 50% 50% 50%;
+      top: 30px;
+      left: 30px;
+      transform-origin: bottom center;
       opacity: 0;
       animation: bloomPetal 3s ease forwards;
-      box-shadow: inset -2px -2px 8px rgba(0,0,0,0.15);
     }
-
     /* Rotate petals evenly around center */
-    .petal:nth-child(1) { transform: rotate(0deg) translateY(-35px); animation-delay: 0s; }
-    .petal:nth-child(2) { transform: rotate(45deg) translateY(-35px); animation-delay: 0.2s; }
-    .petal:nth-child(3) { transform: rotate(90deg) translateY(-35px); animation-delay: 0.4s; }
-    .petal:nth-child(4) { transform: rotate(135deg) translateY(-35px); animation-delay: 0.6s; }
-    .petal:nth-child(5) { transform: rotate(180deg) translateY(-35px); animation-delay: 0.8s; }
-    .petal:nth-child(6) { transform: rotate(225deg) translateY(-35px); animation-delay: 1s; }
-    .petal:nth-child(7) { transform: rotate(270deg) translateY(-35px); animation-delay: 1.2s; }
-    .petal:nth-child(8) { transform: rotate(315deg) translateY(-35px); animation-delay: 1.4s; }
-
+    .petal:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
+    .petal:nth-child(2) { transform: rotate(45deg); animation-delay: 0.2s; }
+    .petal:nth-child(3) { transform: rotate(90deg); animation-delay: 0.4s; }
+    .petal:nth-child(4) { transform: rotate(135deg); animation-delay: 0.6s; }
+    .petal:nth-child(5) { transform: rotate(180deg); animation-delay: 0.8s; }
+    .petal:nth-child(6) { transform: rotate(225deg); animation-delay: 1s; }
+    .petal:nth-child(7) { transform: rotate(270deg); animation-delay: 1.2s; }
+    .petal:nth-child(8) { transform: rotate(315deg); animation-delay: 1.4s; }
     .center {
       position: absolute;
-      width: 35px;
-      height: 35px;
-      background: radial-gradient(circle at center, #ffe066, #ffc107);
+      width: 28px;
+      height: 28px;
+      background: radial-gradient(circle at center, #ffd6e6, #ff7bac);
       border-radius: 50%;
-      top: 52px;
-      left: 52px;
+      top: 46px;
+      left: 46px;
       opacity: 0;
       animation: fadeIn 1s 2s forwards;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-
-    .stem {
-      width: 6px;
-      height: 80px;
-      background: linear-gradient(to right, #2d5016, #5a8a2e);
-      border-radius: 3px;
-      opacity: 0;
-      animation: fadeIn 1s 2.5s forwards;
-      position: relative;
-    }
-
-    .leaf {
-      position: absolute;
-      width: 30px;
-      height: 18px;
-      background: radial-gradient(ellipse at 30% 50%, #5a8a2e, #2d5016);
-      border-radius: 0 50% 50% 50%;
-      opacity: 0;
-      animation: fadeIn 1s 3s forwards;
-    }
-
-    .leaf:nth-child(1) {
-      top: 20px;
-      left: -15px;
-      transform: rotate(-30deg);
-    }
-
-    .leaf:nth-child(2) {
-      top: 45px;
-      right: -15px;
-      transform: rotate(30deg) scaleX(-1);
-    }
-
     @keyframes bloomPetal {
-      0% { transform: rotate(var(--rot)) translateY(-35px) scale(0); opacity: 0; }
-      50% { transform: rotate(var(--rot)) translateY(-35px) scale(1.1); opacity: 1; }
-      100% { transform: rotate(var(--rot)) translateY(-35px) scale(1); opacity: 1; }
+      0% { transform: scale(0) rotate(var(--rotation)); opacity: 0; }
+      50% { transform: scale(1.2) rotate(var(--rotation)); opacity: 1; }
+      100% { transform: scale(1) rotate(var(--rotation)); opacity: 1; }
     }
-
     @keyframes fadeIn { to { opacity: 1; } }
-
     .intro-text {
       margin-top: 40px;
       font-size: 1.6rem;
+      font-weight: 600;
       text-align: center;
       opacity: 0;
       animation: fadeIn 3s 2.5s forwards;
@@ -185,11 +152,20 @@
       width: 100%;
       max-width: 380px;
       border-radius: 20px;
-      filter: hue-rotate(320deg) saturate(1.5);
+      outline: none;
     }
 
     audio::-webkit-media-controls-panel {
-      background: linear-gradient(to right, #ffc1e3, #ffb3d9);
+      background: linear-gradient(135deg, #ff9eb5 0%, #ff6b9d 50%, #f06292 100%);
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(240, 98, 146, 0.3),
+                  inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    audio::-webkit-media-controls-play-button,
+    audio::-webkit-media-controls-current-time-display,
+    audio::-webkit-media-controls-time-remaining-display {
+      filter: brightness(1.2);
     }
 
     .layout {
@@ -213,6 +189,12 @@
       object-fit: cover;
     }
 
+    .letter-images {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
     .letter-image {
       width: 100%;
       border-radius: 22px;
@@ -231,14 +213,14 @@
 
   <!-- HEARTS (background) -->
   <script>
-    for(let i=0; i<50; i++){
+    for(let i=0; i<30; i++){
       let heart = document.createElement('div');
       heart.className = 'heart';
       heart.style.left = Math.random()*100+'%';
-      heart.style.top = Math.random()*100+'%';
-      let size = 8+Math.random()*20;
+      let size = 12+Math.random()*18;
       heart.style.width = heart.style.height = size+'px';
-      heart.style.opacity = 0.15 + Math.random()*0.25;
+      heart.style.animationDuration = (6+Math.random()*4)+'s';
+      heart.style.animationDelay = Math.random()*5+'s';
       document.body.appendChild(heart);
     }
   </script>
@@ -246,21 +228,15 @@
   <!-- INTRO -->
   <section id="intro">
     <div class="rose">
-      <div class="rose-flower">
-        <div class="petal" style="--rot:0deg"></div>
-        <div class="petal" style="--rot:45deg"></div>
-        <div class="petal" style="--rot:90deg"></div>
-        <div class="petal" style="--rot:135deg"></div>
-        <div class="petal" style="--rot:180deg"></div>
-        <div class="petal" style="--rot:225deg"></div>
-        <div class="petal" style="--rot:270deg"></div>
-        <div class="petal" style="--rot:315deg"></div>
-        <div class="center"></div>
-      </div>
-      <div class="stem">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-      </div>
+      <div class="petal" style="--rotation:0deg"></div>
+      <div class="petal" style="--rotation:45deg"></div>
+      <div class="petal" style="--rotation:90deg"></div>
+      <div class="petal" style="--rotation:135deg"></div>
+      <div class="petal" style="--rotation:180deg"></div>
+      <div class="petal" style="--rotation:225deg"></div>
+      <div class="petal" style="--rotation:270deg"></div>
+      <div class="petal" style="--rotation:315deg"></div>
+      <div class="center"></div>
     </div>
     <div class="intro-text">
       Hii Baby!!<br>
@@ -284,15 +260,23 @@
         <video src="videos/vid2.mp4" controls loop></video>
       </div>
 
-      <!-- CENTER LETTER -->
-      <img src="images/letter.png" alt="Love Letter" class="letter-image">
+      <!-- CENTER LETTER IMAGES -->
+      <div class="letter-images">
+        <img src="images/letter.png" alt="Love Letter Part 1" class="letter-image">
+        <img src="images/letter2.png" alt="Love Letter Part 2" class="letter-image">
+      </div>
 
       <!-- RIGHT COLUMN -->
       <div class="media">
         <video src="videos/vid3.mp4" controls loop></video>
-        <img src="images/pic1.jpg" alt="">
-        <img src="images/pic2.jpg" alt="">
+        <video src="videos/vid4.mp4" controls loop></video>
       </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div style="max-width: 1100px; margin: 18px auto 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
+      <video src="videos/vid5.mp4" controls loop style="width: 100%; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.12);"></video>
+      <video src="videos/vid6.mp4" controls loop style="width: 100%; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.12);"></video>
     </div>
   </section>
 
