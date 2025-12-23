@@ -253,30 +253,41 @@
       </audio>
     </div>
 
+    <!-- FIRST ROW: vid1, letter1, vid3 -->
     <div class="layout">
-      <!-- LEFT COLUMN -->
       <div class="media">
         <video src="videos/vid1.mp4" controls loop></video>
-        <video src="videos/vid2.mp4" controls loop></video>
       </div>
-
-      <!-- CENTER LETTER IMAGES -->
-      <div class="letter-images">
+      <div>
         <img src="images/letter.png" alt="Love Letter Part 1" class="letter-image">
-        <img src="images/letter2.png" alt="Love Letter Part 2" class="letter-image">
       </div>
-
-      <!-- RIGHT COLUMN -->
       <div class="media">
         <video src="videos/vid3.mp4" controls loop></video>
+      </div>
+    </div>
+
+    <!-- SECOND ROW: vid2, letter2, vid4 -->
+    <div class="layout" style="margin-top: 18px;">
+      <div class="media">
+        <video src="videos/vid2.mp4" controls loop></video>
+      </div>
+      <div>
+        <img src="images/letter2.png" alt="Love Letter Part 2" class="letter-image">
+      </div>
+      <div class="media">
         <video src="videos/vid4.mp4" controls loop></video>
       </div>
     </div>
 
-    <!-- BOTTOM ROW -->
-    <div style="max-width: 1100px; margin: 18px auto 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
-      <video src="videos/vid5.mp4" controls loop style="width: 100%; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.12);"></video>
-      <video src="videos/vid6.mp4" controls loop style="width: 100%; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.12);"></video>
+    <!-- THIRD ROW: vid5, empty, vid6 -->
+    <div class="layout" style="margin-top: 18px;">
+      <div class="media">
+        <video src="videos/vid5.mp4" controls loop></video>
+      </div>
+      <div></div>
+      <div class="media">
+        <video src="videos/vid6.mp4" controls loop></video>
+      </div>
     </div>
   </section>
 
