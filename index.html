@@ -28,14 +28,14 @@
 
     /* ===== HEARTS BACKGROUND ===== */
     .heart {
-      position: absolute;
+      position: fixed;
       width: 20px;
       height: 20px;
-      background: red;
+      background: rgba(255, 182, 193, 0.4);
       transform: rotate(-45deg);
-      animation: float 6s linear infinite;
-      top: 100%;
       border-radius: 3px 3px 0 0;
+      z-index: 1;
+      pointer-events: none;
     }
     .heart::before,
     .heart::after {
@@ -43,16 +43,11 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      background: red;
+      background: rgba(255, 182, 193, 0.4);
       border-radius: 50%;
     }
     .heart::before { top: -10px; left: 0; }
     .heart::after { top: 0; left: 10px; }
-
-    @keyframes float {
-      0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(-45deg); opacity: 0; }
-    }
 
     /* ===== INTRO (Rose Bloom) ===== */
     #intro {
@@ -64,53 +59,98 @@
       background: linear-gradient(to bottom, #fde6ef, #fff3f8);
       position: relative;
       overflow: hidden;
+      z-index: 10;
     }
 
     .rose {
       position: relative;
-      width: 120px;
-      height: 120px;
+      width: 160px;
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .rose-flower {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin-bottom: 10px;
     }
 
     .petal {
       position: absolute;
-      width: 60px;
-      height: 60px;
-      background: radial-gradient(circle at 50% 50%, #f06292 0%, #c2185b 80%);
-      border-radius: 50% 50% 50% 50%;
-      top: 30px;
-      left: 30px;
-      transform-origin: bottom center;
+      width: 50px;
+      height: 70px;
+      background: radial-gradient(ellipse at 50% 60%, #ff6b9d 0%, #c2185b 100%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      top: 35px;
+      left: 45px;
+      transform-origin: 50% 100%;
       opacity: 0;
       animation: bloomPetal 3s ease forwards;
+      box-shadow: inset -2px -2px 8px rgba(0,0,0,0.15);
     }
 
     /* Rotate petals evenly around center */
-    .petal:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
-    .petal:nth-child(2) { transform: rotate(45deg); animation-delay: 0.2s; }
-    .petal:nth-child(3) { transform: rotate(90deg); animation-delay: 0.4s; }
-    .petal:nth-child(4) { transform: rotate(135deg); animation-delay: 0.6s; }
-    .petal:nth-child(5) { transform: rotate(180deg); animation-delay: 0.8s; }
-    .petal:nth-child(6) { transform: rotate(225deg); animation-delay: 1s; }
-    .petal:nth-child(7) { transform: rotate(270deg); animation-delay: 1.2s; }
-    .petal:nth-child(8) { transform: rotate(315deg); animation-delay: 1.4s; }
+    .petal:nth-child(1) { transform: rotate(0deg) translateY(-35px); animation-delay: 0s; }
+    .petal:nth-child(2) { transform: rotate(45deg) translateY(-35px); animation-delay: 0.2s; }
+    .petal:nth-child(3) { transform: rotate(90deg) translateY(-35px); animation-delay: 0.4s; }
+    .petal:nth-child(4) { transform: rotate(135deg) translateY(-35px); animation-delay: 0.6s; }
+    .petal:nth-child(5) { transform: rotate(180deg) translateY(-35px); animation-delay: 0.8s; }
+    .petal:nth-child(6) { transform: rotate(225deg) translateY(-35px); animation-delay: 1s; }
+    .petal:nth-child(7) { transform: rotate(270deg) translateY(-35px); animation-delay: 1.2s; }
+    .petal:nth-child(8) { transform: rotate(315deg) translateY(-35px); animation-delay: 1.4s; }
 
     .center {
       position: absolute;
-      width: 28px;
-      height: 28px;
-      background: radial-gradient(circle at center, #ffd6e6, #ff7bac);
+      width: 35px;
+      height: 35px;
+      background: radial-gradient(circle at center, #ffe066, #ffc107);
       border-radius: 50%;
-      top: 46px;
-      left: 46px;
+      top: 52px;
+      left: 52px;
       opacity: 0;
       animation: fadeIn 1s 2s forwards;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .stem {
+      width: 6px;
+      height: 80px;
+      background: linear-gradient(to right, #2d5016, #5a8a2e);
+      border-radius: 3px;
+      opacity: 0;
+      animation: fadeIn 1s 2.5s forwards;
+      position: relative;
+    }
+
+    .leaf {
+      position: absolute;
+      width: 30px;
+      height: 18px;
+      background: radial-gradient(ellipse at 30% 50%, #5a8a2e, #2d5016);
+      border-radius: 0 50% 50% 50%;
+      opacity: 0;
+      animation: fadeIn 1s 3s forwards;
+    }
+
+    .leaf:nth-child(1) {
+      top: 20px;
+      left: -15px;
+      transform: rotate(-30deg);
+    }
+
+    .leaf:nth-child(2) {
+      top: 45px;
+      right: -15px;
+      transform: rotate(30deg) scaleX(-1);
     }
 
     @keyframes bloomPetal {
-      0% { transform: scale(0) rotate(var(--rotation)); opacity: 0; }
-      50% { transform: scale(1.2) rotate(var(--rotation)); opacity: 1; }
-      100% { transform: scale(1) rotate(var(--rotation)); opacity: 1; }
+      0% { transform: rotate(var(--rot)) translateY(-35px) scale(0); opacity: 0; }
+      50% { transform: rotate(var(--rot)) translateY(-35px) scale(1.1); opacity: 1; }
+      100% { transform: rotate(var(--rot)) translateY(-35px) scale(1); opacity: 1; }
     }
 
     @keyframes fadeIn { to { opacity: 1; } }
@@ -133,14 +173,23 @@
 
     .audio-container {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       font-size: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     audio {
       width: 100%;
       max-width: 380px;
-      border-radius: 12px;
+      border-radius: 20px;
+      filter: hue-rotate(320deg) saturate(1.5);
+    }
+
+    audio::-webkit-media-controls-panel {
+      background: linear-gradient(to right, #ffc1e3, #ffb3d9);
     }
 
     .layout {
@@ -182,12 +231,14 @@
 
   <!-- HEARTS (background) -->
   <script>
-    for(let i=0; i<20; i++){
+    for(let i=0; i<50; i++){
       let heart = document.createElement('div');
       heart.className = 'heart';
       heart.style.left = Math.random()*100+'%';
-      heart.style.animationDuration = (4+Math.random()*4)+'s';
-      heart.style.width = heart.style.height = (10+Math.random()*15)+'px';
+      heart.style.top = Math.random()*100+'%';
+      let size = 8+Math.random()*20;
+      heart.style.width = heart.style.height = size+'px';
+      heart.style.opacity = 0.15 + Math.random()*0.25;
       document.body.appendChild(heart);
     }
   </script>
@@ -195,15 +246,21 @@
   <!-- INTRO -->
   <section id="intro">
     <div class="rose">
-      <div class="petal" style="--rotation:0deg"></div>
-      <div class="petal" style="--rotation:45deg"></div>
-      <div class="petal" style="--rotation:90deg"></div>
-      <div class="petal" style="--rotation:135deg"></div>
-      <div class="petal" style="--rotation:180deg"></div>
-      <div class="petal" style="--rotation:225deg"></div>
-      <div class="petal" style="--rotation:270deg"></div>
-      <div class="petal" style="--rotation:315deg"></div>
-      <div class="center"></div>
+      <div class="rose-flower">
+        <div class="petal" style="--rot:0deg"></div>
+        <div class="petal" style="--rot:45deg"></div>
+        <div class="petal" style="--rot:90deg"></div>
+        <div class="petal" style="--rot:135deg"></div>
+        <div class="petal" style="--rot:180deg"></div>
+        <div class="petal" style="--rot:225deg"></div>
+        <div class="petal" style="--rot:270deg"></div>
+        <div class="petal" style="--rot:315deg"></div>
+        <div class="center"></div>
+      </div>
+      <div class="stem">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+      </div>
     </div>
     <div class="intro-text">
       Hii Baby!!<br>
@@ -214,7 +271,7 @@
   <!-- LETTER -->
   <section id="letter-section">
     <div class="audio-container">
-      Press this baby ❤️
+      <div>Press this baby ❤️</div>
       <audio controls>
         <source src="audio/letter.mp4" type="audio/mp4">
       </audio>
@@ -245,6 +302,17 @@
       document.getElementById('intro').style.display = 'none';
       document.getElementById('letter-section').style.display = 'block';
       window.scrollTo(0, 0);
+      
+      // Autoplay all videos
+      const videos = document.querySelectorAll('video');
+      videos.forEach(video => {
+        video.play().catch(err => {
+          console.log('Autoplay prevented:', err);
+          // If autoplay is blocked, mute and try again
+          video.muted = true;
+          video.play();
+        });
+      });
     }, 5000);
   </script>
 
